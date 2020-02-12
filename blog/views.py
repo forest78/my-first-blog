@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required   #보안
+
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -13,6 +15,7 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)   # pk에 해당하는 post가 없을 경우에는 404에러를 보여주고, 있을 경우에는 그 pk에 해당하는 Post를 post변수에 저장
     return render(request, 'blog/post_detail.html', {'post': post})
 
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -25,6 +28,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})   #템플릿 불로옴
 
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -38,15 +42,18 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
+@login_required
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')   # 쿼리셋 코드로 발행되지 않은 글 목록을 가져옴
     return render(request, 'blog/post_draft_list.html', {'posts': posts})
 
+@login_required
 def post_publish(request, pk):
   post = get_object_or_404(Post, pk=pk)
   post.publish()
   return redirect('post_detail', pk=pk)
 
+@login_required
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
