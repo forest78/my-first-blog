@@ -6,4 +6,7 @@ urlpatterns = [
     path('post/<int:pk>/', views.post_detail, name='post_detail'),  #post/<int:pk/>/는 URL 패턴 > url이 post문자를 포함, 정수값이 pk라는 변수로 뷰에 전송
     path('post/new/', views.post_new, name='post_new'),
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
+    path('drafts/', views.post_draft_list, name="post_draft_list"),
+    path('post/<pk>/puslish/', views.post_publish, name='post_publish'),
+    path('post/<pk>/remove/', views.post_remove, name='post_remove'),
 ]
