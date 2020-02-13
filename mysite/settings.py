@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 
 # 보안을 위해 로그인
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
