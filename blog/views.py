@@ -13,7 +13,7 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)   # pk에 해당하는 post가 없을 경우에는 404에러를 보여주고, 있을 경우에는 그 pk에 해당하는 Post를 post변수에 저장
-    return render(request, 'blog/post_detail.html', {'post': post})
+    return render(request, 'blog/post_detail.html', {'post': post}) # 템플릿을 사용하기 위한 매개변수
 
 @login_required
 def post_new(request):
